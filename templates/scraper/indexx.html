@@ -1,0 +1,19 @@
+{% if websites %}
+    <ul>
+    {% for website in websites %}
+        <li><a href="/website/{{ website.id }}/">{{ website.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No websites are available.</p>
+{% endif %}
+
+{% if facebookpages %}
+    <ul>
+    {% for facebookpage in facebookpages %}
+        <li><a href="/facebookpage/{{ facebookpage.id }}/">{{ facebookpage.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No facebook pages are available.</p>
+{% endif %}
