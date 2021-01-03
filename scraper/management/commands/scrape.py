@@ -3,6 +3,8 @@ from facebook_scraper import get_posts
 from django.core.management.base import BaseCommand, CommandError
 from scraper.models import Website, FacebookPage, FacebookPost
 import time
+from django.conf import settings
+from django.utils.timezone import make_aware
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -19,9 +21,10 @@ class Command(BaseCommand):
                 print(link)
                 pass
             try:
-                for post in get_posts(link, pages=5):
+                for post in get_posts(link, pages=35):
                     print(post)
                     post['facebook_page_id'] = facebookpage.id
+                    post['time'] = make_aware(post['time'])
                     p = FacebookPost(**post)
                     try:
                         p.save()

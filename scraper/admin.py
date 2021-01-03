@@ -1,17 +1,6 @@
-from django.contrib import admin
-
-# Register your models here.
-from django.contrib import admin
-
-
 from .models import Website, FacebookPage, FacebookPost
-from django.contrib.admin import AdminSite
-
-
 from django import forms
 from django.contrib import admin
-from .models import FacebookPost
-
 import csv
 from django.http import HttpResponse
 
@@ -39,33 +28,29 @@ class FacebookPostForm(forms.ModelForm):
         model = FacebookPost
         exclude = ['link','description','pub_date','time']
 
-@admin.register(FacebookPost)
+
 class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     search_fields = ('text',)
     autocomplete_fields = ['facebook_page_id']
-    list_filter = ('facebook_page',)
+    list_filter = ('facebook_page','time')
     list_display = ('id','facebook_page','text','likes','comments','shares')
     #form = FacebookPostForm
     #exclude = ['link','description','pub_date','time']
     actions = ["export_as_csv"]
 
 
-
-@admin.register(FacebookPage)
 class FacebookPageAdmin(admin.ModelAdmin, ExportCsvMixin):
     search_fields = ('name',)
     list_display = ('id','name','link','description')
     actions = ["export_as_csv"]
 
 
-class MyAdminSite(AdminSite):
-    site_header = 'Trust rank'
+admin.site.site_header = 'Trust rank'
 
 
-admin.site = MyAdminSite(name='myadmin')
 admin.site.register(Website)
-admin.site.register(FacebookPage,FacebookPageAdmin)
-admin.site.register(FacebookPost,FacebookPostAdmin)
+admin.site.register(FacebookPage, FacebookPageAdmin)
+admin.site.register(FacebookPost, FacebookPostAdmin)
 
 
 

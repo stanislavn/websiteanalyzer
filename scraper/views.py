@@ -6,7 +6,6 @@ from .models import Website, FacebookPage
 
 import requests
 import json
-from celery.schedules import crontab
 
 
 

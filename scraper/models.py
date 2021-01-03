@@ -36,7 +36,8 @@ class FacebookPost(models.Model):
     text            = models.TextField(blank = True, null=True)
     post_text       = models.TextField(blank = True, null=True)
     shared_text     = models.TextField(blank = True, null=True)
-    time            = models.DateTimeField('date published', blank = True, null=True, auto_now_add=True)
+    time            = models.DateTimeField('date published', blank = True, null=True)
+    scrape_time     = models.DateTimeField('date scraped', blank=True, null=True, auto_now_add=True)
     image           = models.URLField(blank = True, null=True)
     video           = models.URLField(blank = True, null=True)
     video_thumbnail = models.URLField(blank = True, null=True)
@@ -49,6 +50,7 @@ class FacebookPost(models.Model):
     user_id         = models.BigIntegerField(blank = True, null=True)
     images          = models.URLField(blank = True, null=True)
     manual_description = models.TextField(blank=True, null=True)
+    nlp_description     = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return str(self.text[0:120])
