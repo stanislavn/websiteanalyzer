@@ -33,7 +33,7 @@ class FacebookPostAdmin(admin.ModelAdmin, ExportCsvMixin):
     search_fields = ('text',)
     autocomplete_fields = ['facebook_page_id']
     list_filter = ('facebook_page','time')
-    list_display = ('id','facebook_page','text','likes','comments','shares')
+    list_display = ('text','facebook_page','likes','comments','shares', 'like', 'love', 'wow', 'haha', 'sorry', 'anger')
     #form = FacebookPostForm
     #exclude = ['link','description','pub_date','time']
     actions = ["export_as_csv"]
