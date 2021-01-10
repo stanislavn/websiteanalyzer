@@ -1,7 +1,7 @@
 
 from facebook_scraper import get_posts
 from django.core.management.base import BaseCommand, CommandError
-from scraper.models import Website, FacebookPage, FacebookPost
+from scraper.models import FacebookPage, FacebookPost
 import time
 from django.conf import settings
 from django.utils.timezone import make_aware
