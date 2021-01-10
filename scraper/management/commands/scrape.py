@@ -5,6 +5,7 @@ from scraper.models import Website, FacebookPage, FacebookPost
 import time
 from django.conf import settings
 from django.utils.timezone import make_aware
+from feeds.utils import update_feeds
 
 
 class Command(BaseCommand):
@@ -41,6 +42,8 @@ class Command(BaseCommand):
                     print('skipping already existing post {}'.format(post['post_id']))
             #except:
             #    print('Cant retrieve post from page ',link)
+        #update rss feeds
+        update_feeds(30, self.stdout)
         end = time.time()
         elapsed = (end - start)
         self.stdout.write(self.style.SUCCESS('Posts successfully scraped in "%s"' % elapsed))
