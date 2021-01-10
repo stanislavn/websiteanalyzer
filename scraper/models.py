@@ -6,17 +6,17 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
-class Website(models.Model):
-    name = models.TextField(max_length=200, unique=True)
-    link = models.TextField(max_length=200, unique=True)
-    description = models.TextField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-
-    def __str__(self):
-        return self.name
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+# class Website(models.Model):
+#     name = models.TextField(max_length=200, unique=True)
+#     link = models.TextField(max_length=200, unique=True)
+#     description = models.TextField(max_length=200)
+#     pub_date = models.DateTimeField('date published')
+#
+#     def __str__(self):
+#         return self.name
+#
+#     def was_published_recently(self):
+#         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class FacebookPage(models.Model):
     name = models.TextField(max_length=200, unique=True)

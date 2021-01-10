@@ -1,4 +1,4 @@
-from .models import Website, FacebookPage, FacebookPost
+from .models import FacebookPage, FacebookPost
 from django import forms
 from django.contrib import admin
 import csv
@@ -48,7 +48,7 @@ class FacebookPageAdmin(admin.ModelAdmin, ExportCsvMixin):
 admin.site.site_header = 'Trust rank'
 
 
-admin.site.register(Website)
+#admin.site.register(Website)
 admin.site.register(FacebookPage, FacebookPageAdmin)
 admin.site.register(FacebookPost, FacebookPostAdmin)
 

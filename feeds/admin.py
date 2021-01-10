@@ -1,8 +1,28 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-
+import csv
+from django.http import HttpResponse
 # Register your models here.
 from feeds import models
+
+class ExportCsvMixin:
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response, dialect='excel')
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
+
 
 class SourceAdmin(admin.ModelAdmin):
 
@@ -17,7 +37,7 @@ class SourceAdmin(admin.ModelAdmin):
         return mark_safe('<a href="/admin/feeds/post/?source__id=%i" target="_blank">%i Posts</a>' % (obj.id, qs.count()))
     posts_link.short_description = 'posts'
 
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     raw_id_fields = ('source',)
 
@@ -35,6 +55,7 @@ class PostAdmin(admin.ModelAdmin):
         qs = obj.enclosures.all()
         return mark_safe('<a href="/admin/feeds/enclosure/?post__id=%i" target="_blank">%i Enclosures</a>' % (obj.id, qs.count()))
     enclosures_link.short_description = 'enclosures'
+    actions = ["export_as_csv"]
 
 class EnclosureAdmin(admin.ModelAdmin):
 
